@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../static/styles/tables.css">
+    <link rel="stylesheet" href="../static/styles/forms.css">
+    <link rel="stylesheet" href="../static/styles/common.css">
+
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="general">
+            <div class="logo">
+                <img src="../static/images/cinema-logo.jpg" alt="Cinema logo">
+                <h1>Cinema City Watcher</h1>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="../templates/index.html">Main page</a></li>
+            <li><a href="../templates/event-planner.html">Event planner</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    {% block content %} {% endblock %}
+</main>
+
+</body>
+</html>

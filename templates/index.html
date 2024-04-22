@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Python Cinema Watcher {% endblock %}
+
+{% block content %}
+<div class="centered">
+        <table>
+            <caption>
+                Eredmények
+            </caption>
+            <thead>
+            <tr>
+                <th>Tantárgy</th>
+                <th>Hányan tanítják</th>
+                <th>Kik tanítják</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    {{ fetched_data }}
+                </td>
+            </tr>
+{#             TODO#}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

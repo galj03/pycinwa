@@ -11,7 +11,7 @@ import time
 import json
 import logging
 
-from collections import Collection, namedtuple
+from collections import namedtuple
 from functools import lru_cache, wraps
 from datetime import datetime
 
@@ -23,7 +23,7 @@ UNTIL_DATE = '2020-12-31'
 # Available languages are `en_GB` or `hu_HU`
 LANGUAGE = 'en_GB'
 
-DATA_API_URL = 'https://www.cinemacity.hu/en/data-api-service/v1/quickbook/10102/'
+DATA_API_URL = 'https://www.cinemacity.hu/hu/data-api-service/v1/quickbook/10102/'
 EVENT_URL = '{data_api_url}film-events/in-cinema/{id}/at-date/{date}?attr=&lang={lang}'
 CINEMA_URL = '{data_api_url}cinemas/with-event/until/{until_date}?attr=&lang={lang}'
 
@@ -99,7 +99,7 @@ def logged(func):
     return wrapped
 
 
-def fetch_events(dates, cinemas=BUDAPEST_CINEMAS):
+def fetch_events(dates=None, cinemas=BUDAPEST_CINEMAS):
     """Fetches the events, which are held in the provided
     cinemas on the provided dates. The events are requested from
     the CinemaCity API through the `DATA_API_URL` `EVENT_URL`.
@@ -115,8 +115,11 @@ def fetch_events(dates, cinemas=BUDAPEST_CINEMAS):
     Returns:
         Query object, that holds the requested events.
     """
-    assert isinstance(cinemas, Collection), 'Cinemas must be an `Collection`.'
-    assert isinstance(dates, Collection), 'Dates must be an `Collection`.'
+    if dates is None:
+        dates = [datetime.today()]
+
+    assert isinstance(cinemas, list), 'Cinemas must be a `list`.'
+    assert isinstance(dates, list), 'Dates must be a `list`.'
 
     dates = {datetime.strftime(d, DATE_FORMAT) for d in dates}
 
@@ -244,7 +247,7 @@ class Query:
         self._events = events
 
     def filter(self, predicate=lambda event: True):
-        """Selects the subset of the querried elements,
+        """Selects the subset of the querried elements, 
         based on the provided predicate function.
 
         Arguments:
@@ -253,12 +256,12 @@ class Query:
         return Query(e for e in self._events if predicate(e))
 
     def select(self, selector=lambda event: event):
-        """Lists the event attribute values, which are selected
+        """Lists the event attribute values, which are selected 
         vy the selector funciton.
 
         Arguments:
             selector: a function that receives an event type and
-                returns a value.
+                returns a value. 
 
         Returns:
             An iterable that contains the output values of the

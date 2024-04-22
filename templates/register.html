@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %} Registration {% endblock %}
+
+{% block content %}
+    <div class="flex">
+{#    TODO: form #}
+        <form id="user-info" action="../php/register_check.php" method="POST">
+            <fieldset>
+                <legend>Registration</legend>
+
+{#                <?php#}
+{#                if(isset($_SESSION["problems"])){#}
+{#                    echo '<div class="warning">';#}
+{#                    echo "Sikertelen regisztráció!";#}
+{#                    echo "</div>";#}
+{##}
+{#                    unset($_SESSION["problems"]);#}
+{#                }#}
+{##}
+{#                <?php#}
+{#                if (strlen($nev_error) > 0) {#}
+{#                    echo '<div class="warning">';#}
+{#                    echo $nev_error;#}
+{#                    echo "</div>";#}
+{#                }#}
+{#                ?>#}
+
+                <label for="nev">Name:</label>
+                <input type="text" id="nev" name="nev" size="25" required>
+                <br>
+
+{#                <?php#}
+{#                if (strlen($password_error) > 0) {#}
+{#                    echo '<div class="warning">';#}
+{#                    echo $password_error;#}
+{#                    echo "</div>";#}
+{#                }#}
+{#                ?>#}
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+
+{#                <?php#}
+{#                if (strlen($password_2_error) > 0) {#}
+{#                    echo '<div class="warning">';#}
+{#                    echo $password_2_error;#}
+{#                    echo "</div>";#}
+{#                }#}
+{#                ?>#}
+
+                <label for="password-check">Password again:</label>
+                <input type="password" id="password-check" name="password-check" required>
+                <br>
+
+{#                <?php#}
+{#                if (strlen($email_error) > 0) {#}
+{#                    echo '<div class="warning">';#}
+{#                    echo $email_error;#}
+{#                    echo "</div>";#}
+{#                }#}
+{#                ?>#}
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+                <br>
+
+                <input type="reset" name="btn-reset" value="Visszaállít">
+                <input type="submit" name="btn-submit" value="Regisztrálok">
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
