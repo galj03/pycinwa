@@ -5,13 +5,13 @@ from pycin.pycin import fetch_events
 app = Flask(__name__)
 
 
-# TODO: get some structured data, the current one is temporary
+# TODO: filtering
 @app.route('/')
 def index():  # put application's code here
     query = fetch_events([datetime.today()])
     result = list(
         query
-        .select(lambda e: e.movie.name)
+        .select(lambda e: e)
     )
     return render_template("index.html", fetched_data=result)
 

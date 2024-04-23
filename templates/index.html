@@ -3,24 +3,72 @@
 
 {% block content %}
 <div class="centered">
+    <form action="/" method="GET">
+            <fieldset>
+                <legend>Filtered search</legend>
+
+{#                TODO: consider using select#}
+                <label for="title">Movie title:</label>
+                <input type="text" id="title" name="title" size="25">
+                <br>
+
+                <label for="max_length">Max length:</label>
+                <input type="number" id="max_length" name="max_length">
+                <br>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+                <br>
+
+                <label for="cinemas">Cinemas:</label>
+                    <select name="cinemas" id="cinemas" multiple>
+                      <option value="volvo">Volvo</option>
+                      <option value="saab">Saab</option>
+                      <option value="opel">Opel</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                <br>
+
+                <input type="reset" name="btn-reset" value="Reset">
+                <input type="submit" name="btn-submit" value="Search">
+            </fieldset>
+        </form>
+</div>
+
+<div class="centered">
         <table>
             <caption>
-                Eredmények
+                Results
             </caption>
             <thead>
             <tr>
-                <th>Tantárgy</th>
-                <th>Hányan tanítják</th>
-                <th>Kik tanítják</th>
+                <th>Title</th>
+                <th>Length</th>
+                <th>Date</th>
+                <th>Cinema</th>
+                <th>Booking link</th>
             </tr>
             </thead>
             <tbody>
+            {% for movie_event in fetched_data %}
             <tr>
                 <td>
-                    {{ fetched_data }}
+                    {{ movie_event.movie.name }}
+                </td>
+                <td>
+                    {{ movie_event.movie.length }} minutes
+                </td>
+                <td>
+                    {{ movie_event.date }}
+                </td>
+                <td>
+                    {{ movie_event.cinema.name }}
+                </td>
+                <td>
+                    <a href="{{ movie_event.booking_link }}">Booking link</a>
                 </td>
             </tr>
-{#             TODO#}
+            {% endfor %}
             </tbody>
         </table>
     </div>
