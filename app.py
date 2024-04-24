@@ -13,7 +13,10 @@ def index():  # put application's code here
         query
         .select(lambda e: e)
     )
-    return render_template("index.html", fetched_data=result)
+    # TODO: get unique cinema list
+    cinemas = list(query.filter(lambda e: e not in query)
+                   .select(lambda e: e))
+    return render_template("index.html", fetched_data=result, fetched_cinemas=cinemas)
 
 
 # TODO: plan events, export into some datetime format
@@ -26,6 +29,7 @@ def event_planner():  # put application's code here
 
 
 # TODO: edit config data (fav. cinemas, settings, etc.)
+    # filters could go here? (no reason btw)
 @app.route('/config')
 def config():  # put application's code here
     return 'Hello World!'
@@ -34,6 +38,10 @@ def config():  # put application's code here
 @app.route('/login')
 def favourites():  # put application's code here
     return render_template('login.html')
+
+#TODO: get the trailers from somewhere (port.hu/YT)
+    #see where cinema city gets it from
+    #an iframe could work
 
 
 if __name__ == '__main__':

@@ -20,12 +20,15 @@
                 <input type="date" id="date" name="date">
                 <br>
 
-                <label for="cinemas">Cinemas:</label>
-                    <select name="cinemas" id="cinemas" multiple>
-                      <option value="volvo">Volvo</option>
-                      <option value="saab">Saab</option>
-                      <option value="opel">Opel</option>
-                      <option value="audi">Audi</option>
+                <label for="allCinemas">List from all cinemas</label>
+                <input type="checkbox" id="allCinemas" name="allCinemas" checked onclick="toggleIsCinemaSelectable()">
+                <br>
+
+                <label for="cinemas">Cinema:</label>
+                    <select name="cinemas" id="cinemas" disabled>
+                      {% for movie_event in fetched_cinemas %}
+                      <option value="{{ fetched_cinemas.id }}">{{ fetched_cinemas.name }}</option>
+                      {% endfor %}
                     </select>
                 <br>
 
@@ -71,5 +74,12 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
+</div>
+
+<script>
+    function toggleIsCinemaSelectable(){
+        let cinemaSelector = document.getElementById("cinemas");
+        cinemaSelector.disabled = !cinemaSelector.disabled;
+    }
+</script>
 {% endblock %}
