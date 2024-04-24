@@ -26,7 +26,6 @@ def event_planner():
 
 
 # TODO: edit config data (fav. cinemas, settings, etc.)
-# filters could go here? (no reason btw)
 @app.route('/config')
 def config():
     return 'Hello World!'

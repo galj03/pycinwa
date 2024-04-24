@@ -7,7 +7,6 @@
             <fieldset>
                 <legend>Filtered search</legend>
 
-{#                TODO: consider using select#}
                 <label for="title">Movie title:</label>
                 <input type="text" id="title" name="title" size="25">
                 <br>
@@ -49,6 +48,7 @@
                 <th>Length</th>
                 <th>Date</th>
                 <th>Cinema</th>
+                <th>Sold out</th>
                 <th>Booking link</th>
             </tr>
             </thead>
@@ -66,6 +66,10 @@
                 </td>
                 <td>
                     {{ movie_event.cinema.name }}
+                </td>
+                <td>
+{#                    TODO: x or checkmark #}
+                    {{ movie_event.sold_out }}
                 </td>
                 <td>
                     <a href="{{ movie_event.booking_link }}">Booking link</a>
