@@ -11,7 +11,7 @@ import time
 import json
 import logging
 
-from collections import namedtuple
+from pycinwa.models import Cinema, Movie, Event
 from functools import lru_cache, wraps
 from datetime import datetime
 
@@ -27,31 +27,6 @@ DATA_API_URL = 'https://www.cinemacity.hu/hu/data-api-service/v1/quickbook/10102
 EVENT_URL = '{data_api_url}film-events/in-cinema/{id}/at-date/{date}?attr=&lang={lang}'
 CINEMA_URL = '{data_api_url}cinemas/with-event/until/{until_date}?attr=&lang={lang}'
 
-
-Movie = namedtuple('Movie', ['id', 'name', 'attributes', 'length'])
-"""Namedtuple, holding the information of a movie.
-:param id: str -- unique identifier.
-:param name: str -- name(title) of the movie(film).
-:param attributes: list -- list of string containing attribute keywords.
-:param length: int -- length of the movie in minutes.
-"""
-
-Event = namedtuple('Event', ['id', 'booking_link', 'movie', 'cinema',
-                             'date', 'sold_out', 'attributes'])
-"""Namedtuple, holding the information of an event.
-:param id: str -- unique identifier.
-:param booking_link: str -- url for the booking link.
-:param movie: Movie -- namedtuple object of the movie.
-:param cinema: Cinema -- namedtuple object of the cinema.
-:param date: datetime -- the date of the event.
-:param sold_out: bool -- boolean signaling the availability of tickets.
-"""
-
-Cinema = namedtuple('Cinema', ['id', 'name'])
-"""Namedtuple, holding the information of a cinema.
-:param id: str -- unique identifier.
-:param name: str -- name of the cinema.
-"""
 
 ALBA = Cinema('1124', 'Alba - Székesfehérvár')
 ALLE = Cinema('1133', 'Allee - Budapest')
@@ -99,7 +74,7 @@ def logged(func):
     return wrapped
 
 
-def fetch_events(dates=None, cinemas=BUDAPEST_CINEMAS):
+def fetch_events(dates=None, cinemas=None):
     """Fetches the events, which are held in the provided
     cinemas on the provided dates. The events are requested from
     the CinemaCity API through the `DATA_API_URL` `EVENT_URL`.
@@ -115,6 +90,8 @@ def fetch_events(dates=None, cinemas=BUDAPEST_CINEMAS):
     Returns:
         Query object, that holds the requested events.
     """
+    if cinemas is None:
+        cinemas = CINEMAS
     if dates is None:
         dates = [datetime.today()]
 

@@ -26,8 +26,8 @@
 
                 <label for="cinemas">Cinema:</label>
                     <select name="cinemas" id="cinemas" disabled>
-                      {% for movie_event in fetched_cinemas %}
-                      <option value="{{ fetched_cinemas.id }}">{{ fetched_cinemas.name }}</option>
+                      {% for cinema in fetched_cinemas %}
+                      <option value="{{ cinema.id }}">{{ cinema.name }}</option>
                       {% endfor %}
                     </select>
                 <br>
@@ -39,7 +39,7 @@
 </div>
 
 <div class="centered">
-        <table>
+        <table class="vh300">
             <caption>
                 Results
             </caption>

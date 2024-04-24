@@ -51,3 +51,9 @@ td button, .caption-button {
     left: 50px;
     margin-left: 30px;
 }
+
+.vh300 {
+    max-height: 300vh;
+    overflow-y: scroll;
+    /*display: block;*/
+}
