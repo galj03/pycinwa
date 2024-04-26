@@ -1,10 +1,11 @@
+import mock
 import unittest
 from datetime import datetime
 
 from pycin.pycin import CinemaEventFactory
 
 
-class CinemaEventFactoryTests(unittest.TestCase):
+class TestCinemaEventFactory(unittest.TestCase):
     def test_create_event(self):
         new_event = CinemaEventFactory.create_event(**{
             'id': 10,
@@ -46,10 +47,12 @@ class CinemaEventFactoryTests(unittest.TestCase):
         self.assertEqual(new_cinema.name, 'Belvarosi Mozi')
 
 
-class PyCinFunctionTests(unittest.TestCase):
+class TestPyCinFunctions(unittest.TestCase):
     def setUp(self):
         pass
 
 
 if __name__ == '__main__':
     unittest.main()
+
+# TODO: make this work from pytest as well :)
