@@ -109,10 +109,10 @@ def fetch_events(dates=None, cinemas=None):
 
             for movie in raw_movies:
                 if movie['id'] not in movies:
-                    movies[movie['id']] = create_movie(**movie)
+                    movies[movie['id']] = CinemaEventFactory.create_movie(**movie)
 
             for event in raw_events:
-                events[event['id']] = create_event(
+                events[event['id']] = CinemaEventFactory.create_event(
                     movie=movies[event['filmId']],
                     cinema=cinema,
                     **event)
@@ -132,40 +132,43 @@ def fetch_cinemas(predicate=lambda cinema: True):
         list of the available cinemas.
     """
     cinemas = (
-        create_cinema(**cinema) for
+        CinemaEventFactory.create_cinema(**cinema) for
         cinema in fetch_raw_cinemas(UNTIL_DATE)
     )
 
     return [cinema for cinema in cinemas if predicate(cinema)]
 
 
-def create_event(**parameters):
-    """Convenience method for creating `Event` object."""
-    return Event(
-        id=parameters['id'],
-        movie=parameters['movie'],
-        cinema=parameters['cinema'],
-        date=datetime.strptime(
-            parameters['eventDateTime'], EVENT_DATE_FORMAT),
-        sold_out=parameters['soldOut'],
-        booking_link=parameters['bookingLink'],
-        attributes=tuple(parameters['attributeIds']))
+class CinemaEventFactory:
+    @staticmethod
+    def create_event(**parameters):
+        """Convenience method for creating `Event` object."""
+        return Event(
+            id=parameters['id'],
+            movie=parameters['movie'],
+            cinema=parameters['cinema'],
+            date=datetime.strptime(
+                parameters['eventDateTime'], EVENT_DATE_FORMAT),
+            sold_out=parameters['soldOut'],
+            booking_link=parameters['bookingLink'],
+            attributes=tuple(parameters['attributeIds']))
 
+    @staticmethod
+    def create_movie(**parameters):
+        """Convenience method for creating `Movie` object."""
+        return Movie(
+            id=parameters['id'],
+            name=parameters['name'],
+            length=parameters['length'],
+            video_link=parameters['videoLink'],
+            attributes=tuple(parameters['attributeIds']))
 
-def create_movie(**parameters):
-    """Convenience method for creating `Movie` object."""
-    return Movie(
-        id=parameters['id'],
-        name=parameters['name'],
-        attributes=tuple(parameters['attributeIds']),
-        length=parameters['length'])
-
-
-def create_cinema(**parameters):
-    """Convenience method for creating `Cinema` object."""
-    return Cinema(
-        id=parameters['id'],
-        name=parameters['displayName'])
+    @staticmethod
+    def create_cinema(**parameters):
+        """Convenience method for creating `Cinema` object."""
+        return Cinema(
+            id=parameters['id'],
+            name=parameters['displayName'])
 
 
 @logged

@@ -34,10 +34,12 @@ class Movie:
         unique identifier
     name : str
         name(title) of the movie(film)
-    attributes : list
-        collection of strings containing attribute keywords
     length : int
         length of the movie in minutes
+    video_link : str
+        the youtube link of the movie trailer
+    attributes : list
+        collection of strings containing attribute keywords
 
     Methods
     -------
@@ -45,11 +47,12 @@ class Movie:
         Prints the animals name and what sound it makes
     """
 
-    def __init__(self, id, name, attributes, length):
+    def __init__(self, id, name, length, video_link, attributes):
         self.id = id
         self.name = name
-        self.attributes = attributes
         self.length = length
+        self.attributes = attributes
+        self.video_link = video_link
 
 
 class Event:

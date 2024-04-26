@@ -25,8 +25,8 @@ def event_planner():
     return 'Hello World!'
 
 
-# TODO: edit config data (fav. cinemas, settings, etc.)
-@app.route('/config')
+# TODO: list all movies and trailers
+@app.route('/movies')
 def config():
     return 'Hello World!'
 
