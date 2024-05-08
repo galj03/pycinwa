@@ -41,6 +41,8 @@ class Movie:
         length of the movie in minutes
     video_link : str
         the youtube link of the movie trailer
+    poster_link : str
+        the link for the movie poster
     attributes : list
         collection of strings containing attribute keywords
 
@@ -50,12 +52,13 @@ class Movie:
         Prints the animals name and what sound it makes
     """
 
-    def __init__(self, id, name, length, video_link, attributes):
+    def __init__(self, id, name, length, video_link, poster_link, attributes):
         self.id = id
         self.name = name
         self.length = length
         self.attributes = attributes
         self.video_link = video_link
+        self.poster_link = poster_link
 
 
 class Event:

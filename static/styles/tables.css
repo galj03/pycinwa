@@ -33,6 +33,11 @@ td[headers], td {
     text-align: center;
 }
 
+td[headers="title"] {
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
 td {
     padding: 5px;
 }

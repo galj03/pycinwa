@@ -42,7 +42,7 @@ def favourites():
 # TODO: list all movies and trailers
 @app.route('/movies')
 def config():
-    return 'Hello World!'
+    return redirect(url_for('movies.load_movies'))
 
 
 # TODO: get the trailers from movie object

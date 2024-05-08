@@ -7,7 +7,7 @@
     --footer-height: 15vh;
 }
 
-body{
+body {
     width: 100vw;
 }
 
@@ -30,14 +30,14 @@ nav {
     padding: 10px;
 }
 
-.general{
+.general {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
 }
 
-.general p{
+.general p {
 
 }
 
@@ -74,17 +74,21 @@ main {
     min-height: 70vh;
 }
 
-.centered{
+.centered {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 50px;
 }
 
-#info{
-    color:green;
+#info {
+    color: green;
     font-weight: bold;
     font-size: 1.3rem;
+}
+
+img {
+    max-height: 30vh;
 }
 
 /* Footer */

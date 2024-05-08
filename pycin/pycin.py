@@ -208,6 +208,7 @@ class CinemaEventFactory:
             name=parameters['name'],
             length=parameters['length'],
             video_link=parameters['videoLink'],
+            poster_link=parameters['posterLink'],
             attributes=tuple(parameters['attributeIds']))
 
     @staticmethod

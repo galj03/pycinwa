@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %} Python Cinema Watcher | Movies {% endblock %}
+
+{% block content %}
+    <div class="centered">
+        <table class="vh300">
+            <caption>
+                Movies
+            </caption>
+{#            <thead>#}
+{#            <tr>#}
+{#                <th>Title</th>#}
+{#                <th>Trailer</th>#}
+{#                <th>Date</th>#}
+{#                <th>Cinema</th>#}
+{#                <th>Sold out</th>#}
+{#                <th>Booking link</th>#}
+{#            </tr>#}
+{#            </thead>#}
+            <tbody>
+            {% for movie in movies %}
+                <tr>
+                    <td>
+                        <img src="{{ movie.poster_link }}" alt="movie_poster">
+                    </td>
+                    <td>
+                        {{ movie.name }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
