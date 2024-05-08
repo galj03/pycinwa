@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from datetime import datetime, timedelta
 from pycin.pycin import fetch_events, CINEMAS
+from pycinwa.asd import fetch_distinct_movies
 
 app = Flask(__name__)
 
@@ -13,7 +14,8 @@ def index():
         query
         .select(lambda e: e)
     )
-    return render_template("index.html", fetched_data=result, fetched_cinemas=CINEMAS)
+    mov = fetch_distinct_movies()
+    return render_template("index.html", fetched_data=result, fetched_cinemas=CINEMAS, mov=mov)
 
 
 # TODO: plan events, export into some datetime format
@@ -37,7 +39,6 @@ def favourites():
 
 
 # TODO: get the trailers from somewhere (port.hu/YT)
-# see where cinema city gets it from
 # an iframe could work
 
 

@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Cinema:
     """
     A class used to represent a Cinema
@@ -20,6 +23,7 @@ class Cinema:
     def __init__(self, id, name):
         self.id = id
         self.name = name
+
 
 
 class Movie:
