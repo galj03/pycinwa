@@ -9,8 +9,9 @@ main = Blueprint('main', __name__, static_folder='static', template_folder='temp
                  url_prefix='/main')
 
 
+# TODO: filtering
 @main.get('/')
-def index():
+def load_main():
     query = fetch_events([datetime.today() + timedelta(days=1)])
     result = list(
         query

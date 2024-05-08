@@ -19,14 +19,13 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-# TODO: filtering
 @app.route('/')
 def index():
     """ Redirects to the main page.
 
         :return: Redirects to the main page.
         """
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.load_main'))
 
 
 # TODO: move these into their own places

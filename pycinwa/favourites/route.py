@@ -10,7 +10,7 @@ favourites = Blueprint('favourites', __name__, static_folder='static', template_
 
 
 @favourites.get('/')
-def favourites():
+def load_favourites():
     query = fetch_events([datetime.today() + timedelta(days=1)])
     result = list(
         query
