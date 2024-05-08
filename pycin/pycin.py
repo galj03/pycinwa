@@ -11,10 +11,9 @@ import time
 import json
 import logging
 
-from pycinwa.models import Cinema, Movie, Event
+from pycinwa.models.models import Cinema, Movie, Event
 from functools import lru_cache, wraps
 from datetime import datetime
-
 
 DATE_FORMAT = '%Y-%m-%d'
 EVENT_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
@@ -26,7 +25,6 @@ LANGUAGE = 'en_GB'
 DATA_API_URL = 'https://www.cinemacity.hu/hu/data-api-service/v1/quickbook/10102/'
 EVENT_URL = '{data_api_url}film-events/in-cinema/{id}/at-date/{date}?attr=&lang={lang}'
 CINEMA_URL = '{data_api_url}cinemas/with-event/until/{until_date}?attr=&lang={lang}'
-
 
 ALBA = Cinema('1124', 'Alba - Székesfehérvár')
 ALLE = Cinema('1133', 'Allee - Budapest')
@@ -46,18 +44,15 @@ SZOLNOK = Cinema('1130', 'Szolnok')
 WESTEND = Cinema('1137', 'Westend - Budapest')
 ZALAEGERSZEG = Cinema('1135', 'Zalaegerszeg')
 
-
 CINEMAS = [
     ALBA, ALLE, ARENA, BALATON, CAMPONA, DEBRECEN,
     DUNA_PLAZA, GYOR, MISKOLC, NYIREGYHAZA, PECS, SAVARIA,
     SOPRON, SZEGED, SZOLNOK, WESTEND, ZALAEGERSZEG
 ]
 
-
 BUDAPEST_CINEMAS = [
     ALLE, ARENA, CAMPONA, DUNA_PLAZA, WESTEND
 ]
-
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -65,12 +60,14 @@ logger.setLevel(logging.DEBUG)
 
 def logged(func):
     """Wraps a function and logs its process"""
+
     @wraps(func)
     def wrapped(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
         logger.debug('Query finished in {:.4f}s.'.format(time.time() - start))
         return result
+
     return wrapped
 
 
@@ -139,38 +136,6 @@ def fetch_cinemas(predicate=lambda cinema: True):
     return [cinema for cinema in cinemas if predicate(cinema)]
 
 
-class CinemaEventFactory:
-    @staticmethod
-    def create_event(**parameters):
-        """Convenience method for creating `Event` object."""
-        return Event(
-            id=parameters['id'],
-            movie=parameters['movie'],
-            cinema=parameters['cinema'],
-            date=datetime.strptime(
-                parameters['eventDateTime'], EVENT_DATE_FORMAT),
-            sold_out=parameters['soldOut'],
-            booking_link=parameters['bookingLink'],
-            attributes=tuple(parameters['attributeIds']))
-
-    @staticmethod
-    def create_movie(**parameters):
-        """Convenience method for creating `Movie` object."""
-        return Movie(
-            id=parameters['id'],
-            name=parameters['name'],
-            length=parameters['length'],
-            video_link=parameters['videoLink'],
-            attributes=tuple(parameters['attributeIds']))
-
-    @staticmethod
-    def create_cinema(**parameters):
-        """Convenience method for creating `Cinema` object."""
-        return Cinema(
-            id=parameters['id'],
-            name=parameters['displayName'])
-
-
 @logged
 @lru_cache(maxsize=128)
 def fetch_raw_events(cinema, date):
@@ -219,6 +184,38 @@ def fetch_raw_cinemas(until_date):
     time.sleep(0.1)
 
     return data['cinemas']
+
+
+class CinemaEventFactory:
+    @staticmethod
+    def create_event(**parameters):
+        """Convenience method for creating `Event` object."""
+        return Event(
+            id=parameters['id'],
+            movie=parameters['movie'],
+            cinema=parameters['cinema'],
+            date=datetime.strptime(
+                parameters['eventDateTime'], EVENT_DATE_FORMAT),
+            sold_out=parameters['soldOut'],
+            booking_link=parameters['bookingLink'],
+            attributes=tuple(parameters['attributeIds']))
+
+    @staticmethod
+    def create_movie(**parameters):
+        """Convenience method for creating `Movie` object."""
+        return Movie(
+            id=parameters['id'],
+            name=parameters['name'],
+            length=parameters['length'],
+            video_link=parameters['videoLink'],
+            attributes=tuple(parameters['attributeIds']))
+
+    @staticmethod
+    def create_cinema(**parameters):
+        """Convenience method for creating `Cinema` object."""
+        return Cinema(
+            id=parameters['id'],
+            name=parameters['displayName'])
 
 
 class Query:

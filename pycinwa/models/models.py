@@ -25,7 +25,6 @@ class Cinema:
         self.name = name
 
 
-
 class Movie:
     """
     A class used to represent a Movie

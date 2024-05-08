@@ -1,29 +1,42 @@
-from flask import Flask, render_template
-from datetime import datetime, timedelta
-from pycin.pycin import fetch_events, CINEMAS
-from pycinwa.asd import fetch_distinct_movies
+from flask import Flask, redirect, url_for
+from flask_session import Session
+from pycinwa.error.route import error
+from pycinwa.main.route import main
+from pycinwa.favourites.route import favourites
+from pycinwa.movies.route import movies
 
 app = Flask(__name__)
+
+# register blueprints
+app.register_blueprint(main)
+app.register_blueprint(error)
+app.register_blueprint(favourites)
+app.register_blueprint(movies)
+
+# Set's the session config
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 
 # TODO: filtering
 @app.route('/')
 def index():
-    query = fetch_events([datetime.today() + timedelta(days=1)])
-    result = list(
-        query
-        .select(lambda e: e)
-    )
-    mov = fetch_distinct_movies()
-    return render_template("index.html", fetched_data=result, fetched_cinemas=CINEMAS, mov=mov)
+    """ Redirects to the main page.
 
+        :return: Redirects to the main page.
+        """
+    return redirect(url_for('main.index'))
+
+
+# TODO: move these into their own places
 
 # TODO: plan events, export into some datetime format
 # TODO: only the exportation and showing should be done here
-# TODO: adding to planned will be on the main page
+# TODO: adding to planned will be on the main page (using session)
 # TODO: list favourite movies
 @app.route('/event-planner')
-def event_planner():
+def favourites():
     return 'Hello World!'
 
 
@@ -33,12 +46,7 @@ def config():
     return 'Hello World!'
 
 
-@app.route('/login')
-def favourites():
-    return render_template('login.html')
-
-
-# TODO: get the trailers from somewhere (port.hu/YT)
+# TODO: get the trailers from movie object
 # an iframe could work
 
 
