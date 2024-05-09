@@ -57,8 +57,13 @@ class Movie:
         self.name = name
         self.length = length
         self.attributes = attributes
-        self.video_link = video_link
         self.poster_link = poster_link
+        self.video_link = self._make_video_embeddable(video_link)
+
+    @staticmethod
+    def _make_video_embeddable(video_link: str):
+        embeddable_link = video_link.replace('watch?v=', 'embed/')
+        return embeddable_link
 
 
 class Event:
