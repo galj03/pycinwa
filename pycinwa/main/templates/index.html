@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="centered">
-        <form action="/static" method="GET">
+        <form action="/main" method="GET">
             <fieldset>
                 <legend>Filtered search</legend>
 
@@ -55,45 +55,52 @@
             </tr>
             </thead>
             <tbody>
-            {% for movie_event in fetched_data %}
-                <tr>
-                    <td headers="poster">
-                        <img src="{{ movie_event.movie.poster_link }}" alt="movie_poster">
-                    </td>
-                    <td headers="title">
-                        {{ movie_event.movie.name }}
-                    </td>
-                    <td headers="length">
-                        {{ movie_event.movie.length }} minutes
-                    </td>
-                    <td headers="date">
-                        {{ movie_event.date }}
-                    </td>
-                    <td headers="cinema">
-                        {{ movie_event.cinema.name }}
-                    </td>
-                    <td headers="sold_out">
-                        {#                    TODO: x or checkmark #}
-                        {{ movie_event.sold_out }}
-                    </td>
-                    <td headers="booking_link">
-                        <a href="{{ movie_event.booking_link }}">Booking link</a>
-                    </td>
-                    <td headers="add_to_fav">
-                        {% if movie_event.id in watchlist_ids %}
-                            <a href="{{ url_for('main.remove_from_watchlist', event_id=movie_event.id) }}">
-                                <img src="{{ url_for('main.static', filename='images/favorite-icon-added.png') }}"
-                                     alt="on_watchlist">
-                            </a>
-                        {% else %}
-                            <a href="{{ url_for('main.add_to_watchlist', event_id=movie_event.id) }}">
-                                <img src="{{ url_for('main.static', filename='images/favorite-icon-not-added.png') }}"
-                                     alt="not_on_watchlist">
-                            </a>
-                        {% endif %}
+            {% if fetched_data is defined and fetched_data|length > 0 -%}
+                {% for movie_event in fetched_data %}
+                    <tr>
+                        <td headers="poster">
+                            <img src="{{ movie_event.movie.poster_link }}" alt="movie_poster">
+                        </td>
+                        <td headers="title">
+                            {{ movie_event.movie.name }}
+                        </td>
+                        <td headers="length">
+                            {{ movie_event.movie.length }} minutes
+                        </td>
+                        <td headers="date">
+                            {{ movie_event.date }}
+                        </td>
+                        <td headers="cinema">
+                            {{ movie_event.cinema.name }}
+                        </td>
+                        <td headers="sold_out">
+                            {#                    TODO: x or checkmark #}
+                            {{ movie_event.sold_out }}
+                        </td>
+                        <td headers="booking_link">
+                            <a href="{{ movie_event.booking_link }}">Booking link</a>
+                        </td>
+                        <td headers="add_to_fav">
+                            {% if movie_event.id in watchlist_ids %}
+                                <a href="{{ url_for('main.remove_from_watchlist', event_id=movie_event.id) }}">
+                                    <img src="{{ url_for('main.static', filename='images/favorite-icon-added.png') }}"
+                                         alt="on_watchlist">
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('main.add_to_watchlist', event_id=movie_event.id) }}">
+                                    <img src="{{ url_for('main.static', filename='images/favorite-icon-not-added.png') }}"
+                                         alt="not_on_watchlist">
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else -%}
+                <tr class="placeholder_tr">
+                    <td colspan="7" class="placeholder_str">There are no events matching your search criteria.
                     </td>
                 </tr>
-            {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>

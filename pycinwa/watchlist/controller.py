@@ -20,9 +20,7 @@ class WatchlistController:
     def remove_from_list(self, event_id):
         event = [event for event in self.watchlist if event.id == event_id][0]
 
-        if not isinstance(event, Event):
-            raise TypeError('Event must be an instance of Event')
-        if event not in [self.watchlist]:
+        if event not in self.watchlist:
             raise ValueError('Event not in watchlist')
             # consider just returning here
         self.watchlist.remove(event)

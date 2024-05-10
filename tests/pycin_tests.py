@@ -30,12 +30,14 @@ class TestCinemaEventFactory(unittest.TestCase):
             'name': 'The Dark Knight',
             'length': 152,
             'videoLink': 'https://youtu.be/EXeTwQWrcwY?si=sBpXfHnlUtPQrK8f',
+            'posterLink': 'www.some_test.link/poster',
             'attributeIds': dict()
         })
         self.assertEqual(new_movie.id, 10)
         self.assertEqual(new_movie.name, 'The Dark Knight')
         self.assertEqual(new_movie.length, 152)
         self.assertEqual(new_movie.video_link, 'https://youtu.be/EXeTwQWrcwY?si=sBpXfHnlUtPQrK8f')
+        self.assertEqual(new_movie.poster_link, 'www.some_test.link/poster')
         self.assertCountEqual(new_movie.attributes, dict())
 
     def test_create_cinema(self):
@@ -54,5 +56,3 @@ class TestPyCinFunctions(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-# TODO: make this work from pytest as well :)
