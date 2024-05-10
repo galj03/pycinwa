@@ -17,9 +17,9 @@ def load_main():
         query
         .select(lambda e: e)
     )
-    asd = session['watchlist']
     session['fetched'] = result
-    return render_template("index.html", fetched_data=result, fetched_cinemas=CINEMAS)
+    return render_template("index.html", fetched_data=result, fetched_cinemas=CINEMAS,
+                           watchlist_ids=[event.id for event in session['watchlist']])
 
 
 @main.get('/api/remove-from-watchlist/<event_id>')

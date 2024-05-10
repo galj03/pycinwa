@@ -66,3 +66,8 @@
     max-height: fit-content;
     max-width: fit-content;
 }
+
+.play_img {
+    max-height: 50px;
+    max-width: 50px;
+}

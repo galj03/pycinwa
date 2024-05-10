@@ -80,8 +80,7 @@
                         <a href="{{ movie_event.booking_link }}">Booking link</a>
                     </td>
                     <td headers="add_to_fav">
-{#                        {% if movie_event.id in watchlist|selectattr('id', 'none') %}#}
-                        {% if movie_event.id in watchlist|map(attribute='id')|list %}
+                        {% if movie_event.id in watchlist_ids %}
                             <a href="{{ url_for('main.remove_from_watchlist', event_id=movie_event.id) }}">
                                 <img src="{{ url_for('main.static', filename='images/favorite-icon-added.png') }}"
                                      alt="on_watchlist">

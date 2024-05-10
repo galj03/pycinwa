@@ -27,7 +27,7 @@
                     <td>
                         {#                        TODO: fix play button design#}
                         <img src="{{ movie.poster_link }}" alt="movie_poster">
-                        <img src="{{ url_for('movies.static', filename='images/play_icon.png') }}" alt="play_button"
+                        <img class="play_img" src="{{ url_for('movies.static', filename='images/play_icon.png') }}" alt="play_button"
                              onclick="playTrailer('{{ movie.video_link }}')">
                     </td>
                     <td>
