@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Python Cinema Watcher | Error {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('movies.static', filename='styles/movies.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="centered" style="flex-direction: column">
+        <table>
+            <caption>
+                {{ error_name }}
+            </caption>
+            <tbody>
+            <tr>
+                <td>
+                    {{ error_description }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <form action="{{ url_for('main.load_main') }}" method="get" target="_blank">
+            <input type="submit" value="Return to main page">
+        </form>
+    </div>
+
+{% endblock %}
