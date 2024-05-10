@@ -2,7 +2,7 @@ from flask import Flask, redirect, url_for
 from flask_session import Session
 from pycinwa.error.route import error
 from pycinwa.main.route import main
-from pycinwa.favourites.route import favourites
+from pycinwa.watchlist.route import watchlist
 from pycinwa.movies.route import movies
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ app = Flask(__name__)
 # register blueprints
 app.register_blueprint(main)
 app.register_blueprint(error)
-app.register_blueprint(favourites)
+app.register_blueprint(watchlist)
 app.register_blueprint(movies)
 
 # Set's the session config
@@ -28,25 +28,22 @@ def index():
     return redirect(url_for('main.load_main'))
 
 
-# TODO: move these into their own places
-
-# TODO: plan events, export into some datetime format
-# TODO: only the exportation and showing should be done here
-# TODO: adding to planned will be on the main page (using session)
-# TODO: list favourite movies
 @app.route('/event-planner')
-def favourites():
-    return 'Hello World!'
+def watchlist():
+    """ Redirects to the watchlist page.
+
+            :return: Redirects to the watchlist page.
+        """
+    return redirect(url_for('watchlist.load_watchlist'))
 
 
-# TODO: list all movies and trailers
 @app.route('/movies')
-def config():
+def movies():
+    """ Redirects to the movies page.
+
+            :return: Redirects to the movies page.
+        """
     return redirect(url_for('movies.load_movies'))
-
-
-# TODO: get the trailers from movie object
-# an iframe could work
 
 
 if __name__ == '__main__':

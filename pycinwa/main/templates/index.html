@@ -51,6 +51,7 @@
                 <th id="cinema">Cinema</th>
                 <th id="sold_out">Sold out</th>
                 <th id="booking_link">Booking link</th>
+                <th id="add_to_fav"></th>
             </tr>
             </thead>
             <tbody>
@@ -77,6 +78,20 @@
                     </td>
                     <td headers="booking_link">
                         <a href="{{ movie_event.booking_link }}">Booking link</a>
+                    </td>
+                    <td headers="add_to_fav">
+{#                        {% if movie_event.id in watchlist|selectattr('id', 'none') %}#}
+                        {% if movie_event.id in watchlist|map(attribute='id')|list %}
+                            <a href="{{ url_for('main.remove_from_watchlist', event_id=movie_event.id) }}">
+                                <img src="{{ url_for('main.static', filename='images/favorite-icon-added.png') }}"
+                                     alt="on_watchlist">
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('main.add_to_watchlist', event_id=movie_event.id) }}">
+                                <img src="{{ url_for('main.static', filename='images/favorite-icon-not-added.png') }}"
+                                     alt="not_on_watchlist">
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -62,3 +62,13 @@ td button, .caption-button {
     overflow-y: scroll;
     /*display: block;*/
 }
+
+/* TODO: make this work */
+.placeholder_tr {
+    padding: 50px 0 !important;
+}
+
+.placeholder_str {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

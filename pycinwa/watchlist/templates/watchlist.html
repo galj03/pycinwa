@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %} Python Cinema Watcher | Watchlist {% endblock %}
+
+{% block content %}
+    <div class="centered">
+        <table class="vh300">
+            <caption>
+                Results
+            </caption>
+            <thead>
+            <tr>
+                <th id="poster"></th>
+                <th id="title">Title</th>
+                <th id="length">Length</th>
+                <th id="date">Date</th>
+                <th id="cinema">Cinema</th>
+                <th id="sold_out">Sold out</th>
+                <th id="booking_link">Booking link</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if watchlist is defined and watchlist|length > 0 -%}
+                {% for movie_event in watchlist %}
+                    <tr>
+                        <td headers="poster">
+                            <img src="{{ movie_event.movie.poster_link }}" alt="movie_poster">
+                        </td>
+                        <td headers="title">
+                            {{ movie_event.movie.name }}
+                        </td>
+                        <td headers="length">
+                            {{ movie_event.movie.length }} minutes
+                        </td>
+                        <td headers="date">
+                            {{ movie_event.date }}
+                        </td>
+                        <td headers="cinema">
+                            {{ movie_event.cinema.name }}
+                        </td>
+                        <td headers="sold_out">
+                            {#                    TODO: x or checkmark #}
+                            {{ movie_event.sold_out }}
+                        </td>
+                        <td headers="booking_link">
+                            <a href="{{ movie_event.booking_link }}">Booking link</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else -%}
+                <tr class="placeholder_tr">
+                    <td colspan="7" class="placeholder_str">No movies added to the watchlist so far.
+                        Add the movies to watchlist on the main page.
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="centered flex">
+        <form action="{{ url_for('watchlist.reset') }}" method="post">
+            <input type="submit" value="Reset">
+        </form>
+        <form action="{{ url_for('watchlist.export') }}" method="post" target="_blank">
+            <input type="submit" value="Export">
+        </form>
+    </div>
+{% endblock %}
