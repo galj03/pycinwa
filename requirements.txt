@@ -2,3 +2,4 @@ requests~=2.31.0
 Flask~=3.0.3
 setuptools~=68.2.0
 icalendar~=5.0.12
+mock~=5.1.0
