@@ -48,10 +48,16 @@ def remove_from_watchlist(event_id):
     event_id: int
         The id of the event to remove
 
-    Redirects to main page
+    Redirects to main page on success.
+    If adding was not successful, it will redirect to the error page with information on the issue.
     """
     _watchlist_controller = WatchlistController()
-    _watchlist_controller.remove_from_list(event_id)
+    try:
+        _watchlist_controller.remove_from_list(event_id)
+    except IndexError or ValueError:
+        name = "Event could not be removed from list"
+        description = "The given object was not present in the watchlist."
+        return redirect(url_for('error.load_error', name=name, description=description))
     return redirect(url_for('main.load_main'))
 
 
@@ -65,13 +71,24 @@ def add_to_watchlist(event_id):
         event_id: int
             The id of the event to add
 
-        Redirects to main page
+        Redirects to main page on success.
+        If adding was not successful, it will redirect to the error page with information on the issue.
         """
     fetched = session['fetched']
-    event = [event for event in fetched if event.id == event_id][0]
+    try:
+        event = [event for event in fetched if event.id == event_id][0]
+    except IndexError:
+        name = "Event could not be added to list"
+        description = "The object with the given id was not present in the fetched event list."
+        return redirect(url_for('error.load_error', name=name, description=description))
 
     _watchlist_controller = WatchlistController()
-    _watchlist_controller.add_to_list(event)
+    try:
+        _watchlist_controller.add_to_list(event)
+    except TypeError:
+        name = "Event could not be added to list"
+        description = "The given object was not of type models.Event."
+        return redirect(url_for('error.load_error', name=name, description=description))
     return redirect(url_for('main.load_main'))
 
 

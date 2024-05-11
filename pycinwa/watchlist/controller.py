@@ -76,7 +76,10 @@ class WatchlistController:
         event_id: int
             the id of the event to be removed
         """
-        event = [event for event in self.watchlist if event.id == event_id][0]
+        try:
+            event = [event for event in self.watchlist if event.id == event_id][0]
+        except IndexError:
+            raise IndexError('Event not present in the watchlist')
 
         if event not in self.watchlist:
             raise ValueError('Event not in watchlist')
