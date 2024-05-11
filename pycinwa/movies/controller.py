@@ -1,6 +1,9 @@
 from datetime import datetime
 
-from pycin import fetch_events
+import pycin
+
+
+# from pycin import fetch_events
 
 
 def fetch_distinct_movies(date=datetime.today()) -> list:
@@ -15,7 +18,7 @@ def fetch_distinct_movies(date=datetime.today()) -> list:
     -------
     a list of distinct movies
     """
-    events = fetch_events([date])
+    events = pycin.fetch_events([date])
     movies = list()
     for event in events.select(lambda e: e):
         if event.movie not in movies:
