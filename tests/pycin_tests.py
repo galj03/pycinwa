@@ -49,10 +49,5 @@ class TestCinemaEventFactory(unittest.TestCase):
         self.assertEqual(new_cinema.name, 'Belvarosi Mozi')
 
 
-class TestPyCinFunctions(unittest.TestCase):
-    def setUp(self):
-        pass
-
-
 if __name__ == '__main__':
     unittest.main()

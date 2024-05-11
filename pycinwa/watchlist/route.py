@@ -19,8 +19,8 @@ def reset():
     return redirect(url_for('watchlist.load_watchlist'))
 
 
-# TODO: implement exporting
-@watchlist.get('/export')
+@watchlist.post('/export')
 def export():
     _watchlist_controller = WatchlistController()
-    pass
+    return _watchlist_controller.export()
+    # return redirect(url_for('watchlist.load_watchlist'))
