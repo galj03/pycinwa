@@ -2,6 +2,7 @@ import os.path
 import uuid
 from datetime import timedelta, datetime
 
+import flask
 from flask import session, send_from_directory
 from icalendar import Calendar, Event
 
@@ -37,9 +38,7 @@ class WatchlistController:
     """
 
     def __init__(self):
-        if session.get('watchlist') is None or session.get('watchlist') == '':
-            self.watchlist = list()
-        self.watchlist: list = session['watchlist']
+        self.watchlist: list = list() if (flask.session.get('watchlist') is None or session.get('watchlist') == '') else session['watchlist']
 
     def get_all(self):
         """
