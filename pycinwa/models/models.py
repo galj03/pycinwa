@@ -13,11 +13,6 @@ class Cinema:
         unique identifier
     name : str
         name of the cinema
-
-    Methods
-    -------
-    says(sound=None)
-        Prints the animals name and what sound it makes
     """
 
     def __init__(self, id, name):
@@ -40,7 +35,7 @@ class Movie:
     length : int
         length of the movie in minutes
     video_link : str
-        the youtube link of the movie trailer
+        the YouTube link of the movie trailer
     poster_link : str
         the link for the movie poster
     attributes : list
@@ -48,8 +43,8 @@ class Movie:
 
     Methods
     -------
-    says(sound=None)
-        Prints the animals name and what sound it makes
+    _make_video_embeddable(video_link: str)
+        Converts raw YouTube video link to embeddable format
     """
 
     def __init__(self, id, name, length, video_link, poster_link, attributes):
@@ -88,11 +83,6 @@ class Event:
         boolean signaling the availability of tickets
     attributes : list
         collection of strings containing attribute keywords
-
-    Methods
-    -------
-    says(sound=None)
-        Prints the animals name and what sound it makes
     """
 
     def __init__(self, id, booking_link, movie, date, cinema, sold_out, attributes):

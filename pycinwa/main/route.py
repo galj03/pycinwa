@@ -10,9 +10,18 @@ main = Blueprint('main', __name__, static_folder='static', template_folder='temp
                  url_prefix='/main')
 
 
-# TODO: filtering
 @main.get('/')
 def load_main():
+    """
+    Loads the main page
+
+    Returns
+    -------
+    The main page, with the following content:
+    fetched_data: the events matching the filtering criteria
+    fetched_cinemas: the cinemas where the events take place
+    watchlist_ids: the event ids which were added to the watchlist
+    """
     args = request.args
     date = datetime.today() + timedelta(days=1)
     if args.get('date') is not None and args['date'] != '':
@@ -31,6 +40,16 @@ def load_main():
 
 @main.get('/api/remove-from-watchlist/<event_id>')
 def remove_from_watchlist(event_id):
+    """
+    Removes the event with the given id from the watchlist
+
+    Parameters
+    ----------
+    event_id: int
+        The id of the event to remove
+
+    Redirects to main page
+    """
     _watchlist_controller = WatchlistController()
     _watchlist_controller.remove_from_list(event_id)
     return redirect(url_for('main.load_main'))
@@ -38,8 +57,17 @@ def remove_from_watchlist(event_id):
 
 @main.get('/api/add-to-watchlist/<event_id>')
 def add_to_watchlist(event_id):
+    """
+        Adds a new event to the watchlist
+
+        Parameters
+        ----------
+        event_id: int
+            The id of the event to add
+
+        Redirects to main page
+        """
     fetched = session['fetched']
-    # TODO: export this into a function/method
     event = [event for event in fetched if event.id == event_id][0]
 
     _watchlist_controller = WatchlistController()
@@ -48,6 +76,18 @@ def add_to_watchlist(event_id):
 
 
 def apply_filters(events, args: dict):
+    """
+    Apply filters to events
+
+    Parameters
+    ----------
+    events: the event pool
+    args: the filtering parameters
+
+    Returns
+    -------
+    filtered events
+    """
     if args.get('title') is not None and args['title'] != '':
         events = [event for event in events if args['title'].lower() in event.movie.name.lower()]
     if args.get('max_length') is not None and args['max_length'] != '':

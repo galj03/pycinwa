@@ -9,20 +9,73 @@ from pycinwa.models import models
 
 
 class WatchlistController:
+    """
+    The controller class for the Watchlist module
+
+    ...
+
+    Attributes
+    ----------
+    watchlist : list
+        a list containing all events added to watchlist
+        (the list is initialized from session variable)
+
+    Methods
+    -------
+    get_all()
+        Returns all events added to the watchlist
+    add_to_list(event)
+        adds a new event to the watchlist
+        (raises TypeError when event is not a models.Event object)
+    remove_from_list(event_id)
+        removes the event with given id from the watchlist
+        (raises ValueError when event is not present in the watchlist)
+    reset()
+        Clears the watchlist
+    export()
+        Exports the watchlist to an ics file, and downloads it
+    """
+
     def __init__(self):
-        self.watchlist: list = list() if session.get('watchlist') is None else session['watchlist']
-        # consider using session only
+        if session.get('watchlist') is None or session.get('watchlist') == '':
+            self.watchlist = list()
+        self.watchlist: list = session['watchlist']
 
     def get_all(self):
+        """
+        Returns all events added to the watchlist
+
+        Returns
+        -------
+        All models.Event objects added to the watchlist
+        """
         return self.watchlist
 
     def add_to_list(self, event):
+        """
+        Adds a new event to the watchlist
+        (also updates session variable)
+
+        Parameters
+        ----------
+        event: models.Event
+            the event to be added to the watchlist
+        """
         if not isinstance(event, models.Event):
             raise TypeError('Event must be an instance of Event')
         self.watchlist.append(event)
         session['watchlist'] = self.watchlist
 
     def remove_from_list(self, event_id):
+        """
+        Removes the event with given id from the watchlist
+        (also updates session variable)
+
+        Parameters
+        ----------
+        event_id: int
+            the id of the event to be removed
+        """
         event = [event for event in self.watchlist if event.id == event_id][0]
 
         if event not in self.watchlist:
@@ -32,10 +85,21 @@ class WatchlistController:
         session['watchlist'] = self.watchlist
 
     def reset(self):
+        """
+        Clears the watchlist
+        (also updates session variable)
+        """
         self.watchlist.clear()
         session['watchlist'] = self.watchlist
 
     def export(self):
+        """
+        Exports the watchlist to an ics file, and downloads it
+
+        Returns
+        -------
+        The flask response to download the exported file
+        """
         cal = Calendar()
         cal.add('prodid', '-//Movies to watch//pycinwa//')
         cal.add('version', '2.0')
