@@ -70,4 +70,8 @@
 .play_img {
     max-height: 50px;
     max-width: 50px;
+
+    position: relative;
+    bottom: 12vh;
+    right: 7vw;
 }

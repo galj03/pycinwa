@@ -63,7 +63,7 @@ td button, .caption-button {
     /*display: block;*/
 }
 
-/* TODO: make this work */
+/* NOTE: this does not work */
 .placeholder_tr {
     padding: 50px 0 !important;
 }
