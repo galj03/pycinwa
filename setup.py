@@ -5,7 +5,7 @@ with open('README.md', 'r') as fp:
 
 setup(
     name='pycinwa',
-    version='',
+    version='0.1.0',
     packages=find_packages(exclude="tests"),
     url='https://github.com/galj03/pycinwa',
     license='MIT License',
