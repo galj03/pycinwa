@@ -1,6 +1,7 @@
 import os
+import uuid
 
-from flask import Flask, redirect, url_for, session
+from flask import Flask, redirect, url_for, session, render_template
 from flask_session import Session
 from pycinwa.error.route import error
 from pycinwa.main.route import main
@@ -8,6 +9,8 @@ from pycinwa.watchlist.route import watchlist
 from pycinwa.movies.route import movies
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = uuid.uuid4().hex
 
 # register blueprints
 app.register_blueprint(main)
@@ -36,6 +39,8 @@ def index():
         :return: Redirects to the main page.
         """
     session['UPLOAD_FOLDER'] = upload_folder
+    if session.get('watchlist') is None or session.get('watchlist') == '':
+        session['watchlist'] = list()
     return redirect(url_for('main.load_main'))
 
 
@@ -49,7 +54,7 @@ def watchlist():
     return redirect(url_for('watchlist.load_watchlist'))
 
 
-@app.route('/movies')
+@app.route('/show-movies')
 def movies():
     """ Redirects to the movies page.
 
@@ -57,6 +62,18 @@ def movies():
         """
     session['UPLOAD_FOLDER'] = upload_folder
     return redirect(url_for('movies.load_movies'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect(url_for('error.load_error',
+                            name="HTTP 404 - Not Found", description="Web URL not found."))
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return redirect(url_for('error.load_error',
+                            name="HTTP 500 - Internal Server Error", description="Something went wrong."))
 
 
 if __name__ == '__main__':

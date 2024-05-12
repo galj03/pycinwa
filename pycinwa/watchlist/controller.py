@@ -38,7 +38,7 @@ class WatchlistController:
     """
 
     def __init__(self):
-        self.watchlist: list = list() if (flask.session.get('watchlist') is None or session.get('watchlist') == '') else session['watchlist']
+        self.watchlist: list = list() if 'watchlist' not in session else session['watchlist']
 
     def get_all(self):
         """
