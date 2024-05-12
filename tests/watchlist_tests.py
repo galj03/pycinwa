@@ -15,14 +15,19 @@ class TestWatchlistController(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
 
-        movie1 = Movie(1, "Test Movie 1", 90, "www.video.li/nk1", "www.poster.li/nk1", dict())
-        movie2 = Movie(2, "Test Movie 2", 120, "www.video.li/nk2", "www.poster.li/nk2", dict())
+        movie1 = Movie(1, "Test Movie 1", 90,
+                       "www.video.li/nk1", "www.poster.li/nk1", dict())
+        movie2 = Movie(2, "Test Movie 2", 120,
+                       "www.video.li/nk2", "www.poster.li/nk2", dict())
 
-        event1 = Event(1, "www.booking.li/nk1", movie1, datetime(2024, 5, 27, 10, 0),
+        event1 = Event(1, "www.booking.li/nk1", movie1,
+                       datetime(2024, 5, 27, 10, 0),
                        None, False, dict())
-        event2 = Event(2, "www.booking.li/nk2", movie1, datetime(2024, 5, 27, 12, 0),
+        event2 = Event(2, "www.booking.li/nk2", movie1,
+                       datetime(2024, 5, 27, 12, 0),
                        None, False, dict())
-        event3 = Event(3, "www.booking.li/nk3", movie2, datetime(2024, 5, 27, 14, 0),
+        event3 = Event(3, "www.booking.li/nk3", movie2,
+                       datetime(2024, 5, 27, 14, 0),
                        None, False, dict())
         watchlist = list()
         watchlist.append(event1)

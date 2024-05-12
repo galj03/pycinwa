@@ -7,11 +7,11 @@ setup(
     name='pycinwa',
     version='',
     packages=find_packages(exclude="tests"),
-    url='',
+    url='https://github.com/galj03/pycinwa',
     license='MIT License',
     author='galj',
     author_email='galjozsi45@gmail.com',
     description='TODO: write description',
     long_description=long_description,
-    install_requires=['requests', 'Flask']
+    install_requires=['requests', 'Flask', 'Flask-Session', 'icalendar', 'mock', 'setuptools']
 )

@@ -35,7 +35,8 @@ class TestCinemaEventFactory(unittest.TestCase):
         self.assertEqual(new_movie.id, 10)
         self.assertEqual(new_movie.name, 'The Dark Knight')
         self.assertEqual(new_movie.length, 152)
-        self.assertEqual(new_movie.video_link, 'https://youtu.be/EXeTwQWrcwY?si=sBpXfHnlUtPQrK8f')
+        self.assertEqual(new_movie.video_link,
+                         'https://youtu.be/EXeTwQWrcwY?si=sBpXfHnlUtPQrK8f')
         self.assertEqual(new_movie.poster_link, 'www.some_test.link/poster')
         self.assertCountEqual(new_movie.attributes, dict())
 

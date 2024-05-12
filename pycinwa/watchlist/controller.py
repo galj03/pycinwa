@@ -2,7 +2,6 @@ import os.path
 import uuid
 from datetime import timedelta, datetime
 
-import flask
 from flask import session, send_from_directory
 from icalendar import Calendar, Event
 
@@ -38,7 +37,8 @@ class WatchlistController:
     """
 
     def __init__(self):
-        self.watchlist: list = list() if 'watchlist' not in session else session['watchlist']
+        self.watchlist: list = [] if 'watchlist' not in session \
+            else session['watchlist']
 
     def get_all(self):
         """
@@ -76,7 +76,7 @@ class WatchlistController:
             the id of the event to be removed
         """
         try:
-            event = [event for event in self.watchlist if event.id == event_id][0]
+            event = [e for e in self.watchlist if e.id == event_id][0]
         except IndexError:
             raise IndexError('Event not present in the watchlist')
 
@@ -110,14 +110,15 @@ class WatchlistController:
             calendar_event = Event()
             calendar_event.add('summary', event.movie.name)
             calendar_event.add('dtstart', event.date)
-            calendar_event.add('dtend', event.date + timedelta(minutes=event.movie.length))
+            dtend = event.date + timedelta(minutes=event.movie.length)
+            calendar_event.add('dtend', dtend)
             calendar_event.add('dtstamp', datetime.utcnow())
             calendar_event.add('uid', str(uuid.uuid4()))
 
             cal.add_component(calendar_event)
 
         filename = 'watchlist.ics'
-        with open(os.path.join(session['UPLOAD_FOLDER'], filename), 'wb') as fp:
-            fp.write(cal.to_ical())
+        with open(os.path.join(session['UPLOAD_FOLDER'], filename), 'wb') as f:
+            f.write(cal.to_ical())
 
         return send_from_directory(session['UPLOAD_FOLDER'], filename)

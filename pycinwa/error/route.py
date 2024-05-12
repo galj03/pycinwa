@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request
 
-error = Blueprint('error', __name__, static_folder='static', template_folder='templates',
+error = Blueprint('error', __name__, static_folder='static',
+                  template_folder='templates',
                   url_prefix='/error')
 
 
@@ -17,4 +18,5 @@ def load_error():
     """
     args = request.args
     return render_template("error.html",
-                           error_name=args.get('name'), error_description=args.get('description'))
+                           error_name=args.get('name'),
+                           error_description=args.get('description'))

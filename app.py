@@ -1,7 +1,7 @@
 import os
 import uuid
 
-from flask import Flask, redirect, url_for, session, render_template
+from flask import Flask, redirect, url_for, session
 from flask_session import Session
 from pycinwa.error.route import error
 from pycinwa.main.route import main
@@ -67,13 +67,15 @@ def movies():
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect(url_for('error.load_error',
-                            name="HTTP 404 - Not Found", description="Web URL not found."))
+                            name="HTTP 404 - Not Found",
+                            description="Web URL not found."))
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
     return redirect(url_for('error.load_error',
-                            name="HTTP 500 - Internal Server Error", description="Something went wrong."))
+                            name="HTTP 500 - Internal Server Error",
+                            description="Something went wrong."))
 
 
 if __name__ == '__main__':

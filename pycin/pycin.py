@@ -22,9 +22,12 @@ UNTIL_DATE = '2020-12-31'
 # Available languages are `en_GB` or `hu_HU`
 LANGUAGE = 'en_GB'
 
-DATA_API_URL = 'https://www.cinemacity.hu/hu/data-api-service/v1/quickbook/10102/'
-EVENT_URL = '{data_api_url}film-events/in-cinema/{id}/at-date/{date}?attr=&lang={lang}'
-CINEMA_URL = '{data_api_url}cinemas/with-event/until/{until_date}?attr=&lang={lang}'
+DATA_API_URL = ('https://www.cinemacity.hu/hu/'
+                'data-api-service/v1/quickbook/10102/')
+EVENT_URL = ('{data_api_url}film-events/in-cinema/'
+             '{id}/at-date/{date}?attr=&lang={lang}')
+CINEMA_URL = ('{data_api_url}cinemas/with-event/'
+              'until/{until_date}?attr=&lang={lang}')
 
 ALBA = Cinema('1124', 'Alba - Székesfehérvár')
 ALLE = Cinema('1133', 'Allee - Budapest')
@@ -106,7 +109,8 @@ def fetch_events(dates=None, cinemas=None):
 
             for movie in raw_movies:
                 if movie['id'] not in movies:
-                    movies[movie['id']] = CinemaEventFactory.create_movie(**movie)
+                    id = movie['id']
+                    movies[id] = CinemaEventFactory.create_movie(**movie)
 
             for event in raw_events:
                 events[event['id']] = CinemaEventFactory.create_event(
@@ -225,7 +229,7 @@ class Query:
         self._events = events
 
     def filter(self, predicate=lambda event: True):
-        """Selects the subset of the querried elements, 
+        """Selects the subset of the querried elements,
         based on the provided predicate function.
 
         Arguments:
@@ -234,12 +238,12 @@ class Query:
         return Query(e for e in self._events if predicate(e))
 
     def select(self, selector=lambda event: event):
-        """Lists the event attribute values, which are selected 
+        """Lists the event attribute values, which are selected
         vy the selector funciton.
 
         Arguments:
             selector: a function that receives an event type and
-                returns a value. 
+                returns a value.
 
         Returns:
             An iterable that contains the output values of the

@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for
 
 from pycinwa.watchlist.controller import WatchlistController
 
-watchlist = Blueprint('watchlist', __name__, static_folder='static', template_folder='templates',
+watchlist = Blueprint('watchlist', __name__, static_folder='static',
+                      template_folder='templates',
                       url_prefix='/watchlist')
 
 
@@ -17,7 +18,8 @@ def load_watchlist():
     watchlist: the items added to the watchlist
     """
     _watchlist_controller = WatchlistController()
-    return render_template("watchlist.html", watchlist=_watchlist_controller.get_all())
+    return render_template("watchlist.html",
+                           watchlist=_watchlist_controller.get_all())
 
 
 @watchlist.post('/reset')

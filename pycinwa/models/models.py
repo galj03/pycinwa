@@ -1,6 +1,3 @@
-from datetime import datetime
-
-
 class Cinema:
     """
     A class used to represent a Cinema
@@ -85,7 +82,8 @@ class Event:
         collection of strings containing attribute keywords
     """
 
-    def __init__(self, id, booking_link, movie, date, cinema, sold_out, attributes):
+    def __init__(self, id, booking_link, movie,
+                 date, cinema, sold_out, attributes):
         self.id = id
         self.booking_link = booking_link
         self.movie = movie

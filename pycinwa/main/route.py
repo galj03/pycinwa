@@ -1,12 +1,14 @@
 from datetime import datetime, timedelta
 
-from flask import Blueprint, render_template, redirect, url_for, session, request
+from flask import (Blueprint, render_template,
+                   redirect, url_for, session, request)
 
 from pycin import fetch_events, CINEMAS
 from pycin.pycin import DATE_FORMAT
 from pycinwa.watchlist.controller import WatchlistController
 
-main = Blueprint('main', __name__, static_folder='static', template_folder='templates',
+main = Blueprint('main', __name__, static_folder='static',
+                 template_folder='templates',
                  url_prefix='/main')
 
 
@@ -34,8 +36,9 @@ def load_main():
     )
     result = apply_filters(result, args)
     session['fetched'] = result
-    return render_template("index.html", fetched_data=result, fetched_cinemas=CINEMAS,
-                           watchlist_ids=[event.id for event in session['watchlist']])
+    return render_template("index.html",
+                           fetched_data=result, fetched_cinemas=CINEMAS,
+                           watchlist_ids=[e.id for e in session['watchlist']])
 
 
 @main.get('/api/remove-from-watchlist/<event_id>')
@@ -49,7 +52,8 @@ def remove_from_watchlist(event_id):
         The id of the event to remove
 
     Redirects to main page on success.
-    If adding was not successful, it will redirect to the error page with information on the issue.
+    If adding was not successful, it will redirect
+    to the error page with information on the issue.
     """
     _watchlist_controller = WatchlistController()
     try:
@@ -57,7 +61,8 @@ def remove_from_watchlist(event_id):
     except IndexError or ValueError:
         name = "Event could not be removed from list"
         description = "The given object was not present in the watchlist."
-        return redirect(url_for('error.load_error', name=name, description=description))
+        return redirect(url_for('error.load_error',
+                                name=name, description=description))
     return redirect(url_for('main.load_main'))
 
 
@@ -72,15 +77,18 @@ def add_to_watchlist(event_id):
             The id of the event to add
 
         Redirects to main page on success.
-        If adding was not successful, it will redirect to the error page with information on the issue.
+        If adding was not successful, it will redirect
+        to the error page with information on the issue.
         """
     fetched = session['fetched']
     try:
         event = [event for event in fetched if event.id == event_id][0]
     except IndexError:
         name = "Event could not be added to list"
-        description = "The object with the given id was not present in the fetched event list."
-        return redirect(url_for('error.load_error', name=name, description=description))
+        description = ("The object with the given id "
+                       "was not present in the fetched event list.")
+        return redirect(url_for('error.load_error',
+                                name=name, description=description))
 
     _watchlist_controller = WatchlistController()
     try:
@@ -88,7 +96,8 @@ def add_to_watchlist(event_id):
     except TypeError:
         name = "Event could not be added to list"
         description = "The given object was not of type models.Event."
-        return redirect(url_for('error.load_error', name=name, description=description))
+        return redirect(url_for('error.load_error',
+                                name=name, description=description))
     return redirect(url_for('main.load_main'))
 
 
@@ -106,10 +115,13 @@ def apply_filters(events, args: dict):
     filtered events
     """
     if args.get('title') is not None and args['title'] != '':
-        events = [event for event in events if args['title'].lower() in event.movie.name.lower()]
+        name = args['title'].lower()
+        events = [e for e in events if name in e.movie.name.lower()]
     if args.get('max_length') is not None and args['max_length'] != '':
-        events = [event for event in events if event.movie.length <= int(args['max_length'])]
-    if ((args.get('allCinemas') is None or args['allCinemas'] != '')
-            and args.get('cinemas') is not None and args['cinemas'] != ''):
-        events = [event for event in events if event.cinema.id == args['cinemas']]
+        ml = int(args['max_length'])
+        events = [e for e in events if e.movie.length <= ml]
+    is_all_cinemas = (args.get('allCinemas') is None or args['allCinemas'] != '')
+    is_cinema_selected = args.get('cinemas') is not None and args['cinemas'] != ''
+    if is_all_cinemas and is_cinema_selected:
+        events = [e for e in events if e.cinema.id == args['cinemas']]
     return events
