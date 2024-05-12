@@ -13,5 +13,5 @@ setup(
     author_email='galjozsi45@gmail.com',
     description='TODO: write description',
     long_description=long_description,
-    install_requires=['requests', 'Flask', 'Flask-Session', 'icalendar', 'mock']
+    # install_requires=['requests', 'Flask', 'Flask-Session', 'icalendar', 'mock']
 )
