@@ -54,6 +54,8 @@ class Movie:
 
     @staticmethod
     def _make_video_embeddable(video_link: str):
+        if not video_link:
+            return None
         embeddable_link = video_link.replace('watch?v=', 'embed/')
         return embeddable_link
 
